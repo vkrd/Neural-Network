@@ -2,28 +2,28 @@ import numpy as np
 from tqdm import tqdm
 from activ_funcs import *
 from cost_funcs import *
+from LearningRate import LRScheduler
 
 
 layerType = np.array(["i", "d", "o"])
 
-feature_set = np.array([[0.05, 0.1]])
-labels = np.array([[0.01, 0.99]])
-labels = labels.reshape(1, labels.shape[1])
-
-np.random.seed(43)
-learning_rate = 0.5
+#test with XOR gate
+feature_set = np.array([[0, 0],[1, 1], [1,0], [0,1]])
+labels = np.array([[0],[0],[1],[1]])
 
 # define network architecture
-arc = np.array([2, 2, 2])
+arc = np.array([2, 3, 1])
 
 # randomize starting weights and biases
 weights = []
+
 
 for nodes in range(1,arc.size):
     temp_arr = np.random.rand(arc[nodes-1],arc[nodes])
     weights.append(temp_arr)
 
 bias = np.random.rand(arc.size-1,1)
+
 
 
 def predict(arr):
@@ -35,8 +35,13 @@ def predict(arr):
         inpMat.append(np.dot(inputs, weights[i]) + bias[i])
         inputs = sigmoid(np.dot(inputs, weights[i]) + bias[i])
         valMat.append(inputs.copy())
+    return inputs
 
-for e in tqdm(range(10)):
+LRS = LRScheduler()
+LRS.constant(0.5)
+
+
+for e in tqdm(range(10000)):
     inputs = feature_set
 
     valMat = [inputs]
@@ -45,7 +50,6 @@ for e in tqdm(range(10)):
     for i in range(len(weights)):
         # calculate dot prod and apply activation func
         inputs = sigmoid(np.dot(inputs, weights[i]) + bias[i])
-        # print(inputs)
         valMat.append(inputs.copy())
 
     # output layer
@@ -56,6 +60,8 @@ for e in tqdm(range(10)):
     nodeDeltaMatrix = [np.empty_like(i) for i in weights]
     newWeights = [np.copy(i) for i in weights]
 
+    learning_rate = LRS.nextLR()
+    
     for i in reversed(range(len(weights))):
         if layerType[i + 1] == "o":
 
