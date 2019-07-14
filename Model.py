@@ -4,7 +4,6 @@ from cost_funcs import *
 from LearningRate import LRScheduler
 from layers import *
 
-# print out numbers nicely
 np.set_printoptions(suppress=True, formatter={'float_kind':'{:f}'.format})
 
 class Model:
@@ -27,7 +26,6 @@ class Model:
             raise ValueError(
                 'Mismatching output dimensions (expected ' + str(self.layers[-1].nodes) + ' but received ' + str(
                     labels.shape[-1]) + ')')
-        print(feature_set.shape[-1])
 
         for i in range(1, self.layers.size):
             temp_arr = np.random.rand(self.layers[i - 1].nodes, self.layers[i].nodes)
@@ -38,7 +36,6 @@ class Model:
         # initializing learning rate scheduler
         LRS = LRScheduler()
         if ("learning_rate" in kwargs):
-            print("using")
             LRS.constant(kwargs["learning_rate"])
         else:
             LRS.constant(0.5)
@@ -73,9 +70,10 @@ class Model:
                     node_delta = dE_dO * dO_dnet
 
                     nodeDeltaMatrix.insert(i, node_delta)
+                    # print(node_delta)
 
                     dnet_dw = valMat[i]
-                    
+                    # print(dnet_dw)
                     slope = np.matmul(dnet_dw.T, node_delta)
 
                     # update weights and bias
