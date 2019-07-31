@@ -16,7 +16,7 @@ The only libraries you need to have are listed below with their pip installation
 - [x] Multiple activation functions
 - [x] Learning rate scheduler
 - [x] High level network builder
-- [ ] Momentum
+- [x] Momentum
 - [ ] Regularization
 
 ## Sources
