@@ -11,13 +11,21 @@ The only libraries you need to have are listed below with their pip installation
     pip install tqdm
 
 ## Features
-
+### General
 - [x] Backpropagation
 - [x] Multiple activation functions
 - [x] Learning rate scheduler
 - [x] High level network builder
 - [x] Momentum
+- [ ] RMSProp
+- [ ] Adam
 - [ ] Regularization
+
+### Layers
+- [x] Dense
+- [ ] Dropout
+- [ ] Memory
+- [ ] Recurrent
 
 ## Sources
 
