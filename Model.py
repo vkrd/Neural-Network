@@ -16,6 +16,41 @@ class Model:
     def add_layer(self, layer):
         self.layers = np.append(self.layers, [layer])
 
+    def save_model(self, name="model"):
+        with open(name + ".arc", "w") as file:
+            for x in self.layers:
+                file.write(x.to_string() + " ")
+            print("Model architecture saved to \'" + name + ".arc\'")
+
+        with open(name + ".weights", "w") as file:
+            for x in self.weights:
+                file.write(np.array_repr(x) + "|")
+            print("Model weights saved to \'" + name + ".weights\'")
+
+    def load_architecture(self, name):
+        with open(name, "r") as file:
+            print("Loaded architecture...")
+            self.layers = np.array([])
+            arr = file.read()[:-1].split()
+            
+            for a in arr:
+                info_arr = a.split("|")
+                if info_arr[0] == "d":
+                    self.add_layer(Dense(int(info_arr[1]), activation=info_arr[2]))
+                else:
+                    self.add_layer(Dense(int(info_arr[1]), name=info_arr[0], activation=info_arr[2]))
+            print("Successfully loaded!")
+
+    def load_weights(self, name):
+        with open(name, "r") as file:
+            print("Loaded weights...")
+            self.weights = []
+            arr = file.read()[:-1].split("|")
+            
+            for a in arr:
+                self.weights.append(eval("np." + a))
+            print("Successfully loaded!")
+
     def train(self, feature_set, labels, epochs=1000, momentum=0, **kwargs):
         # randomize starting weights and biases
         self.weights = []
@@ -27,7 +62,7 @@ class Model:
             raise ValueError('Mismatching input dimentions (expected ' + str(self.layers[0].nodes) + ' but recieved ' +  str(feature_set.shape[-1]) + ')')
         elif (labels.shape[-1] != self.layers[-1].nodes):
             raise ValueError('Mismatching output dimentions (expected ' + str(self.layers[-1].nodes) + ' but recieved ' +  str(labels.shape[-1]) + ')')
-        #np.random.seed(5389)
+
         print(feature_set.shape[-1] )
         
         for i in range(1,self.layers.size):
@@ -43,7 +78,7 @@ class Model:
         else:
             LRS.constant(0.5)
 
-        retained_gradient = np.zeros(self.weights.shape)
+        retained_gradient = [np.zeros(i.shape) for i in self.weights]
         
         for e in tqdm(range(epochs)):
             inputs = feature_set
@@ -59,8 +94,6 @@ class Model:
             # output layer
             output_vec = inputs
             target = labels
-
-            
             
             # backwards prop
             nodeDeltaMatrix = [np.empty_like(i) for i in self.weights]
@@ -87,6 +120,7 @@ class Model:
 
                     # update weights and bias
                     newWeights[i] -= (learning_rate * slope) + retained_gradient[i]
+                    retained_gradient[i] = momentum*retained_gradient[i] + (learning_rate * slope)
                     self.bias[i] -= learning_rate * np.mean(slope)
 
                 elif self.layers[i+1].name == "d":
@@ -104,9 +138,9 @@ class Model:
 
                     # update weights and bias
                     newWeights[i] -= (learning_rate * slope) + retained_gradient[i]
+                    retained_gradient[i] = momentum*retained_gradient[i] + (learning_rate * slope)
                     self.bias[i] -= learning_rate * np.mean(slope)
 
-            retained_gradient = momentum*retained_gradient-newWeights
             # update weights for next pass
             self.weights = newWeights
 
