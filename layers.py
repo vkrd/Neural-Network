@@ -29,3 +29,6 @@ class Dense:
         else:
             #By default use derivative of sigmoid
             return d_sigmoid(x)
+
+    def to_string(self):
+        return self.name + "|" + str(self.nodes) + "|" + self.activ_name
