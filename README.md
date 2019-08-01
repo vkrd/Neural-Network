@@ -17,9 +17,10 @@ The only libraries you need to have are listed below with their pip installation
 - [x] Multiple activation functions
 - [x] Learning rate scheduler
 - [x] High level network builder
+- [x] Save/Load model architecture and weights (customized file formats)
 - [ ] Regularization
 - [ ] Test/Train split
-- [ ] Save/Load model architecture and weights
+
 
 ### Layers
 - [x] Dense
