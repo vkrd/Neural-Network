@@ -5,7 +5,7 @@ Hi! I am a computer science student and this repository is where I am keeping my
 
 ## Setup
 
-The only libraries you need to have are listed below with their pip installations
+The only libraries you need to have are listed below with their pip installations. Numpy is used for linear algebra and tqdm is used to monitor training progress.
 
     pip install numpy
     pip install tqdm
@@ -16,9 +16,6 @@ The only libraries you need to have are listed below with their pip installation
 - [x] Multiple activation functions
 - [x] Learning rate scheduler
 - [x] High level network builder
-- [x] Momentum
-- [ ] RMSProp
-- [ ] Adam
 - [ ] Regularization
 
 ### Layers
@@ -27,8 +24,18 @@ The only libraries you need to have are listed below with their pip installation
 - [ ] Memory
 - [ ] Recurrent
 
-## Sources
+### Optimizers
+- [x] Gradient Descent
+- [x] Momentum
+- [ ] Stochastic Gradient Descent
+- [ ] Nesterov Accelerated Gradient
+- [ ] RMSProp
+- [ ] Adam
 
-[A Step by Step Backpropagation Example (by Matt Mazur)](https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/)
+## References
 
-[Learning Rate Schedules (by Suki Lau)](https://towardsdatascience.com/learning-rate-schedules-and-adaptive-learning-rate-methods-for-deep-learning-2c8f433990d1)
+[A Step by Step Backpropagation Example](https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/)
+
+[Learning Rate Schedules](https://towardsdatascience.com/learning-rate-schedules-and-adaptive-learning-rate-methods-for-deep-learning-2c8f433990d1)
+
+[Overview of different Optimizers for neural networks](https://medium.com/datadriveninvestor/overview-of-different-optimizers-for-neural-networks-e0ed119440c3)
