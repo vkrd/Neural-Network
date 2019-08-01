@@ -12,11 +12,14 @@ The only libraries you need to have are listed below with their pip installation
 
 ## Features
 ### General
+- [x] Multiple hidden layers
 - [x] Backpropagation
 - [x] Multiple activation functions
 - [x] Learning rate scheduler
 - [x] High level network builder
 - [ ] Regularization
+- [ ] Test/Train split
+- [ ] Save/Load model architecture and weights
 
 ### Layers
 - [x] Dense
